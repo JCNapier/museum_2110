@@ -14,17 +14,13 @@ class Museum
     end
 
     def interests_list(patron)
-        patron.interests.map do |interest|
-            interest
-        end
+        patron.interests
     end
 
     def recommend_exhibits(patron)
-        @exhibits.map do |exhibit|
-            if interests_list(patron).include?(exhibit.name)
-               exhibit
-            end 
-        end.compact
+        @exhibits.find_all do |exhibit|
+            interests_list(patron).include?(exhibit.name)
+        end
     end
 
     def admit(patron)
@@ -33,6 +29,7 @@ class Museum
 
     def patrons_by_exhibit_interest
         @exhibits.reduce({}) do |hash, exhibit|
+            #excellent!
             hash[exhibit] = @patrons.find_all do |patron|
                 patron.interests.include?(exhibit.name)
             end
