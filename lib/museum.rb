@@ -31,7 +31,7 @@ class Museum
         @exhibits.reduce({}) do |hash, exhibit|
             #excellent!
             hash[exhibit] = @patrons.find_all do |patron|
-                patron.interests.include?(exhibit.name)
+                interests_list(patron).include?(exhibit.name)
             end
             hash
         end
